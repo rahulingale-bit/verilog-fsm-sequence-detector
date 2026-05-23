@@ -1,46 +1,54 @@
-# verilog-fsm-sequence-detector
-Designed and verified an overlapping 1011 sequence detector using Moore FSM architecture in Verilog HDL.
-
-
 # Verilog FSM Sequence Detector
 
-## Project Overview
-
-This project implements an **overlapping 1011 Sequence Detector** using a **Moore Finite State Machine (FSM)** in Verilog HDL.
-
-The detector continuously monitors a serial input stream and asserts the output whenever the sequence **1011** is detected. The design supports **overlapping sequence detection**, allowing consecutive occurrences of the target pattern to be recognized without resetting the FSM.
-
-This project demonstrates fundamental RTL design concepts including state machine design, state transitions, sequential logic, combinational logic, and functional verification.
+Designed and verified an overlapping 1011 sequence detector using Moore FSM architecture in Verilog HDL.
 
 ---
 
-## Features
+## Overview
+
+This project implements an **Overlapping 1011 Sequence Detector** using a **Moore Finite State Machine (FSM)** in Verilog HDL. The design continuously monitors a serial input stream and asserts the output whenever the target sequence **1011** is detected.
+
+The detector supports **overlapping sequence detection**, enabling consecutive occurrences of the pattern to be recognized without resetting the FSM. This project demonstrates key RTL design principles including state machine design, sequential logic implementation, combinational next-state logic, and functional verification.
+
+---
+
+## Project Objectives
+
+- Design a Moore FSM using Verilog HDL
+- Detect the sequence **1011** in a serial data stream
+- Support overlapping pattern detection
+- Develop and verify the design using a dedicated testbench
+- Generate synthesizable RTL suitable for FPGA and ASIC design flows
+
+---
+
+## Key Features
 
 - Moore FSM Architecture
 - Overlapping Sequence Detection
-- Verilog HDL Implementation
-- Modular RTL Design
-- Functional Verification using Testbench
-- Synthesizable Design
-- Simulation Waveform Verification
+- Synthesizable RTL Design
+- Functional Verification Using Testbench
+- RTL Schematic Generation
+- Simulation Waveform Analysis
+- FPGA/ASIC Design Flow Compatible
 
 ---
 
-## Sequence to Detect
+## Sequence Detection
 
-Target Sequence:
+### Target Pattern
 
+```text
 1011
+```
 
 ### Example
 
-Input Stream:
-1011011
-
-Detection Output:
-0001001
-
-The detector identifies multiple occurrences of the sequence while supporting overlap between consecutive patterns.
+| Input Stream | Detection Result |
+|-------------|------------------|
+| 1011 | Sequence Detected |
+| 1011011 | Two Detections |
+| 1001 | No Detection |
 
 ---
 
@@ -56,111 +64,104 @@ The detector identifies multiple occurrences of the sequence while supporting ov
 
 ---
 
-## Design Methodology
-
-The design follows a Moore FSM approach where:
-
-- State transitions are controlled by the serial input bit.
-- Output depends only on the current state.
-- Detection occurs when the FSM enters the final detection state.
-- Overlapping patterns are handled through optimized state transitions.
-
----
-
-## Project Structure
+## State Transition Flow
 
 ```text
-verilog-fsm-sequence-detector/
-│
-├── rtl/
-│   └── sequence_detector.v
-│
-├── tb/
-│   └── sequence_detector_tb.v
-│
-├── waveform/
-│   └── sequence_detector_waveform.png
-│
-├── docs/
-│   ├── state_diagram.png
-│   └── sequence_detector_rtl_schematic.png
-│
-└── README.md
+S0 --1--> S1
+S0 --0--> S0
+
+S1 --0--> S2
+S1 --1--> S1
+
+S2 --1--> S3
+S2 --0--> S0
+
+S3 --1--> S4
+S3 --0--> S2
+
+S4 --1--> S1
+S4 --0--> S2
 ```
 
 ---
 
 ## RTL Design
 
-The RTL module contains:
+The design consists of:
 
 - State Register Logic
 - Next-State Logic
 - Output Logic
-- Reset Handling
-- Overlapping Sequence Support
+- Reset Logic
+- Overlapping Detection Support
 
-The design is written using synthesizable Verilog constructs suitable for FPGA and ASIC design flows.
+The RTL is written using synthesizable Verilog constructs and can be integrated into FPGA or ASIC design flows.
 
 ---
 
 ## Verification
 
-The design was verified using a dedicated Verilog testbench.
+A dedicated Verilog testbench was developed to validate the functionality of the FSM.
 
-### Test Cases
-
-#### Test Case 1: Valid Detection
+### Test Case 1 – Valid Sequence
 
 Input:
+```text
 1011
+```
 
 Expected Result:
+```text
 Sequence Detected
+```
 
----
-
-#### Test Case 2: Overlapping Detection
+### Test Case 2 – Overlapping Detection
 
 Input:
+```text
 1011011
+```
 
 Expected Result:
+```text
 Two Successful Detections
+```
 
----
-
-#### Test Case 3: Invalid Sequence
+### Test Case 3 – Invalid Sequence
 
 Input:
+```text
 1001
+```
 
 Expected Result:
+```text
 No Detection
+```
 
 ---
 
-## Simulation Waveform
+## Project Files
 
-Insert waveform screenshot below:
-
-![Simulation Waveform](waveform/sequence_detector_waveform.png)
-
----
-
-## FSM State Diagram
-
-Insert FSM state diagram below:
-
-![FSM State Diagram](docs/state_diagram.png)
+| File | Description |
+|--------|-------------|
+| sequence_detector.v | RTL implementation of the FSM |
+| sequence_detector_tb.v | Functional verification testbench |
+| sequence_detector_waveform.png | Simulation waveform output |
+| sequence_detector_rtl_schematic.png | Synthesized RTL schematic |
+| README.md | Project documentation |
 
 ---
 
 ## RTL Schematic
 
-Insert synthesized RTL schematic below:
+![RTL Schematic](sequence_detector_rtl_schematic.png)
 
-![RTL Schematic](docs/sequence_detector_rtl_schematic.png)
+---
+
+## Simulation Waveform
+
+![Simulation Waveform](sequence_detector_waveform.png)
 
 ---
 
@@ -174,39 +175,37 @@ Insert synthesized RTL schematic below:
 
 ---
 
-## Learning Outcomes
+## Skills Demonstrated
 
-Through this project, the following concepts were practiced:
-
-- Finite State Machine Design
-- Moore FSM Implementation
-- State Transition Modeling
-- RTL Coding Techniques
+- Verilog HDL
+- RTL Design
+- Finite State Machine (FSM) Design
 - Digital Logic Design
 - Functional Verification
 - Simulation and Debugging
-- FPGA/ASIC Design Fundamentals
+- FPGA Design Flow
+- ASIC Design Fundamentals
 
 ---
 
-## Future Improvements
+## Future Enhancements
 
 - Mealy FSM Implementation
-- Configurable Sequence Detection
+- Parameterized Sequence Detector
 - SystemVerilog Assertions (SVA)
 - Functional Coverage
-- UVM-Based Verification Environment
 - FPGA Hardware Validation
+- UVM-Based Verification Environment
 
 ---
 
 ## Author
 
-Rahul Ingale
+**Rahul Ingale**
 
 B.Tech Electronics & Telecommunication Engineering
 
 Aspiring RTL / ASIC Design Engineer
 
-Skills:
-Verilog HDL | Digital Design | FSM Design | RTL Development | VLSI
+### Skills
+Verilog HDL • RTL Design • FSM Design • Digital Logic • VLSI
